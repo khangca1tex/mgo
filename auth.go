@@ -34,8 +34,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/globalsign/mgo/bson"
-	"github.com/globalsign/mgo/internal/scram"
+	"gopkg.in/mgo.v2/bson"
+	"gopkg.in/mgo.v2/internal/scram"
 )
 
 type authCmd struct {
@@ -332,6 +332,7 @@ func (socket *mongoSocket) loginSASL(cred Credential) error {
 			Payload:        payload,
 		}
 		start = 0
+		cred.Mechanism = ""
 		err = socket.loginRun(cred.Source, &cmd, &res, func() error {
 			// See the comment on lock for why this is necessary.
 			lock(true)
